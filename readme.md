@@ -60,20 +60,20 @@ I've only implemented the cyclical Process Word communication, not yet the cycli
 
 A standard cyclical message:
 __ start pause __ (3.5ms min)
-Byte1: Start delimiter (Request = 0x02, response = 0x1D)
-Byte2: Slave ADDR (0-99 for single addressing, 254 for universal point to point, see PDF for more)
-Byte3: TYPE / PDU type (0x05 for 3 Process words, 0x06 for 8 byte parameter channel, x04 for 3 PWs + 8byte param channel) all in CYCLIC MODE
-Byte4+5: PD1 (assume TYPE 0x05) so either a PO or PI (set value in page 330 SEW MC07b manual --> Parameter 870-876, i use DEFAULT settings)
-Byte6+7: PD2 
-Byte8+9: PD3
-Byte10: BCC (Block Check Character, makes all bits in the same position of the bytes combined an EVEN number) 
+- Byte1: Start delimiter (Request = 0x02, response = 0x1D)
+- Byte2: Slave ADDR (0-99 for single addressing, 254 for universal point to point, see PDF for more)
+- Byte3: TYPE / PDU type (0x05 for 3 Process words, 0x06 for 8 byte parameter channel, x04 for 3 PWs + 8byte param channel) all in CYCLIC MODE
+- Byte4+5: PD1 (assume TYPE 0x05) so either a PO or PI (set value in page 330 SEW MC07b manual --> Parameter 870-876, i use DEFAULT settings)
+- Byte6+7: PD2 
+- Byte8+9: PD3
+- Byte10: BCC (Block Check Character, makes all bits in the same position of the bytes combined an EVEN number) 
 
 Example data for BCC:
-1 0 0 1 0 1 
-1 1 0 0 1 1
-1 0 0 1 0 0
-Then the BCC is: making every column of bits even:
-1 1 0 0 1 0
+- 1 0 0 1 0 1 
+- 1 1 0 0 1 1
+- 1 0 0 1 0 0
+- Then the BCC is: making every column of bits even:
+- 1 1 0 0 1 0
 This is achieved by the XOR bitwise operator (^).
 Note that the PDs are words, and for the BCC split up into two bytes. 
 
